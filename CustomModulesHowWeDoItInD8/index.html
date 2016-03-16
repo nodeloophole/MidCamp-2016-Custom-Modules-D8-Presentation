@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Custom Modules: How We Do It in Drupal 8</title>
+
+  <meta name="description" content="Custom Modules: How We Do It in Drupal 8">
+  <meta name="author" content="Scott Weston">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+
+  <!--
+      MidCamp theme:
+  -->
+  <link rel="stylesheet" href="midcamp/midwest.css" id="theme">
+  <!--
+      Other theme variants:
+
+      <link rel="stylesheet" href="midcamp/black.css" id="theme">
+      <link rel="stylesheet" href="midcamp/teal-light.css" id="theme">
+      <link rel="stylesheet" href="midcamp/teal-dark.css" id="theme">
+  -->
+
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <div class="footer">
+    <div class="branding--logo">
+      <span class="logo__image"><img src="midcamp/midcamp-logo.png" alt="MidCamp logo" height="55px"/></span>
+      <p class="logo__site-name">#MidCamp</p>
+    </div>
+    <div class="session--info">
+      <p class="session__title">Custom Modules: How We Do It in Drupal 8 <span
+              class="seperator">&nbsp;/&nbsp;</span></p>
+      <p class="session__presenter">Scott Weston</p>
+    </div>
+  </div>
+
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+
+
+    <section>
+      <h1>Custom Modules</h1>
+      <h2>How we do it in Drupal 8</h2>
+      <h3>MidCamp 2016</h3>
+      <h3>#MidCamp</h3>
+
+    </section>
+
+    <section>
+      <div class='left' style='float:left; width:480px; height:100%'>
+        <img src="images/scott_weston.jpg">
+      </div>
+      <div class='right'>
+        <h3>Scott Weston</h3>
+
+        <h4>Duo Consulting</h4><h4>Director of Development</h4>
+        <h5>https://duoconsulting.com</h5>
+        <h4>@NodeLoophole</h4>
+      </div>
+
+
+    </section>
+
+    <section>
+      <h2>Code and Slides</h2>
+      <p>https://github.com/nodeloophole/midcamp2016</p>
+    </section>
+
+    <section>
+      <h2>Session Purpose</h2>
+      <p>To provide you with code examples comparing common tasks in Drupal 7 and their equivalent in Drupal
+        8.</p>
+    </section>
+    <section>
+      <h2>Session Format</h2>
+      <ul>
+        <li>Review each topic in Drupal 7</li>
+        <li>Show code examples in Drupal 8</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Topics Covered</h2>
+      <ul>
+        <li>HTML Tables</li>
+        <li>Lists</li>
+        <li>Links</li>
+        <li>Overriding page titles and local tasks</li>
+        <li>Creating nodes programmatically</li>
+        <li>Editing nodes programmatically</li>
+        <li>Query for nodes using entityQuery</li>
+        <li>Setting up cron tasks</li>
+        <li>Getting nodes from Views result</li>
+        <li>Create a menu link</li>
+        <li>Create a block</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Use Drupal Console!</h2>
+      <p>Using Drupal Console will make your life easier for this and many other things.</p>
+      <p><a href="https://drupalconsole.com/" target="_blank">Drupal Console</a></p>
+    </section>
+    <section><h2>HTML Tables</h2></section>
+    <section><h2>HTML Tables</h2>
+      <p>Drupal 7</p>
+      <ul>
+        <li>Built out as an array of arrays
+          <ul>
+            <li>header</li>
+            <li>rows</li>
+          </ul>
+        </li>
+        <li>Output using:</li>
+      </ul>
+      <pre><code data-trim contenteditable>
+        $content = theme('table', array('header' => $header, 'rows' => $rows));
+
+        return $content;
+      </code></pre>
+
+    </section>
+
+    <section><h2>HTML Tables</h2>
+      <p>Drupal 8</p>
+      <ul>
+        <li>Similar structure to Drupal 7 as far as header and rows</li>
+        <li>The render array is different</li>
+      </ul>
+      <pre><code data-trim contenteditable>
+        $content[] = array(
+        '#theme' => 'table',
+        '#header' => $header,
+        '#rows' => $rows,
+        );
+
+        return $content;
+      </code></pre>
+
+    </section>
+
+    <section><h2>HTML Tables</h2>
+      <p>More Information</p>
+      <ul>
+        <li><a href="https://goo.gl/R44MOA" target="_blank">Examples Module</li>
+        <li><a href="https://goo.gl/OjbNyi" target="_blank">Table API </a></li>
+      </ul>
+    </section>
+    <section><h2>Lists</h2></section>
+    <section><h2>Lists</h2>
+      <h3>Drupal 7</h3>
+      <p>An array of items is passed to <code>theme('item_list',...)</code></p>
+            <pre><code data-trim contenteditable>
+              // Simple unordered list
+              $items = array(
+              'Item 1',
+              'Item 2',
+              'Item 3',
+              );
+
+              $list = theme('item_list', array(
+              'title' => t('Unordered List'),
+              'items' => $items
+              ));
+            </code></pre>
+
+    </section>
+    <section><h2>Lists</h2>
+      <h3>Drupal 8</h3>
+      <p>Feels similar - Create a renderable array </p>
+<pre><code data-trim contenteditable>
+  $fruits = array(
+  'Apple',
+  'Banana',
+  'Fig',
+  'Mango',
+  'Orange'
+  );
+
+  $content[] = [
+  '#theme' => 'item_list',
+  '#items' => $fruits,
+  '#title' => t('Some Fruits'),
+  '#list_type' => 'ol',
+  '#attributes' => array('class' => array('class-1', 'class-2'))
+  ];
+</code>
+</pre>
+    </section>
+    <section><h2>Lists</h2>
+      <p>Nested lists - put sub-items in 'children'
+        <pre><code data-trim contenteditable>
+          $apples = array(
+          'Gala',
+          'Fuji',
+          'Golden Delicious',
+          );
+
+          $fruits = array(
+          array(
+          '#markup' => 'Apple',
+          'children' => $apples,
+          ),
+
+          'Banana',
+          'Fig',
+          'Mango',
+          'Orange'
+          );
+
+          $content[] = [
+          '#theme' => 'item_list',
+          '#items' => $fruits,
+          '#title' => t('Some Fruits'),
+          '#list_type' => 'ol',
+          '#attributes' => array('class' => array('class-1', 'class-2'))
+          ];
+        </code>
+        </pre>
+    </section>
+    <section><h2>Links</h2></section>
+    <section><h2>Links</h2>
+      <p>Drupal 7</p>
+      <ul>
+        <li><code>l($title, $url, $options);</code></li>
+      </ul>
+    </section>
+
+
+    <section><h2>Links</h2>
+      <p>Drupal 8</p>
+
+      <ul>
+        <li><code>l();</code> is deprecated, avoid using.</li>
+        <li>Lots of ways to build links, no clear consensus</li>
+      </ul>
+
+    </section>
+    <section><p>HTML Code</p>
+<pre><code data-trim contenteditable>
+  $output .= '
+  <dd>' . t('The Database Logging module allows you
+    to view an event log on the <a href=":dblog">Recent log messages</a> page.
+    The log is a chronological list of recorded... properly.',
+    array(':dblog' => \Drupal::url('dblog.overview'))) . '
+  </dd>
+  ';
+</code>
+</pre>
+    </section>
+
+    <section>As a Render Array
+<pre><code data-trim contenteditable>
+  $url = (new Url('system.db_update', array('op' => 'run')))
+  ->setOption('base_url', $base_url);
+  $build['link'] = array(
+  '#type' => 'link',
+  '#title' => $this->t('Apply pending updates'),
+  '#attributes' => array('class' => array('button', 'button--primary')),
+  '#weight' => 5,
+  '#url' => $url,
+  );
+</code>
+</pre>
+    </section>
+
+    <section>
+      <pre><code data-trim contenteditable>
+        use Drupal\Core\Link;
+        use Drupal\Core\Url;
+        ...
+
+        $link = new Link($text, $url);
+      </code>
+      </pre>
+      <p>Creates Link object</p>
+    </section>
+    <section>
+      <h2>Using Link::_______</h2>
+<pre><code data-trim contenteditable>
+
+  Link::createFromRoute();
+
+</code>
+</pre>
+      <p>Creates Link object</p>
+    </section>
+    <section>
+      <h2>Using Link::_______</h2>
+<pre><code data-trim contenteditable>
+  Link::fromTextAndUrl();
+</code>
+</pre>
+      <p>Creates Link object</p>
+    </section>
+    <section>
+      <h2>Link Object</h2>
+      <h3>Options</h3>
+      <ul>
+        <li>$Link->toRenderable() to generate a renderable array</li>
+        <li>$Link->toString() to generate &lt;a href="/path"&gt;...&lt;/a&gt; </li>
+      </ul>
+    </section>
+
+    <section><h1>Overriding Page Titles and Routes</h1></section>
+    <section>
+      <h2>Overriding Page Titles and Routes</h2>
+      <p>Route information created by another module can be overridden by a RouteSubscriber.</p>
+    </section>
+    <section>
+      <h2>Override Titles / Tabs</h2>
+      <p>Drupal 7</p>
+      <p><code>hook_menu_alter();</code> for both page titles and local tasks</p>
+      <img src="images/d7-menu-alter-01.png">
+
+    </section>
+
+
+    <section>
+      <h2>What is a Route?</h2>
+      <p>A <em>route</em> is a path which is defined for Drupal to return some sort of content.</p>
+      <p>/user/login<br/>/node <br/>/node/123 </p>
+    </section>
+    <section>
+      <h2>What is a Route Subscriber?</h2>
+      <p>A type of Event Subscriber that listens for RoutingEvents::ALTER. This is where other modules can alter
+        existing routes.</p>
+      <p>Analogous to <code>hook_menu_alter()</code> in Drupal 7</p>
+    </section>
+    <section><h2>How to Alter a Route</h2>
+      <ol>
+        <li>Create a file at /modules/{module}/src/Routing/RouteSubscriber.php</li>
+        <li>Add a class that extends RouteSubscriberBase</li>
+        <li>With a method alterRoutes</li>
+        <li>Make the desired changes</li>
+        <li>Add info to {module}.services.yml</li>
+      </ol>
+    </section>
+
+    <section><h3>Route Subscriber File</h3>
+      <img src="images/d8-route-subscriber-01.png"></section>
+    <section><h3>Route Subscriber File</h3>
+      <img src="images/d8-route-subscriber-02.png"></section>
+    <section><h3>Bonus Tip: Homepage Title</h3>
+      <p>If there's no content on the default homepage, edit the NO RESULTS html in view: homepage, display:
+        page_1</p>
+      <img src="images/d8-homepage-01.png"><br>
+      <img src="images/d8-homepage-02.png"></section>
+
+    <section><h2>Overriding Local Task (Tab) Titles</h2>
+      <p>In Drupal 7, this was done in <code>hook_menu_alter();</code></p>
+      <p>In Drupal 8, <code>hook_local_tasks_alter(&$local_tasks)</code></p></section>
+    <section><h2>Overriding Local Task (Tab) Titles</h2>
+      <p>Steps</p>
+      <ul>
+        <li>Find route (using webprofiler, etc.)</li>
+        <li>Create hook_local_tasks_alter() fuctnion</li>
+      </ul>
+<pre><code data-trim contenteditable>
+  $local_tasks['system.theme_settings']['title'] = t('Foo');
+</code>
+</pre>
+    </section>
+<section><h1>Creating Nodes Programmatically</h1></section>
+    <section>
+      <h2>Creating Nodes Programmatically</h2>
+      <p>Drupal 7</p>
+      <pre><code data-trim contenteditable>
+        $node = new stdClass();
+
+        // Add info/field data to the node
+        $node->type = 'page';
+        $node->status = 1;
+        $node->uid = 1;
+
+        $node->title = t('Clever Node Title');
+        $node->body[LANGUAGE_NONE][0]['value'] = "Node body text.";
+
+        // Let Drupal sprinkle some magic on the class.
+        node_object_prepare($node);
+
+        // Save the node.
+        node_save($node);
+      </code>
+      </pre>
+    </section>
+    <section><h2>Creating Nodes Programmatically</h2>
+      <p>Drupal 8</p>
+
+<pre><code data-trim contenteditable>
+
+  public function __construct() {
+  // Hey Drupal, I want to play with nodes!
+  $this->NodeStorage = \Drupal::entityTypeManager()->getStorage('node');
+  }
+
+  public function generate($nodeCount = 1) {
+
+  for ($i = 1; $i <= $nodeCount; $i++) {
+  // Create an array for the node
+  $node_fields = array(
+  'title' => t('Press Release :i of :nodeCount', [
+  ':i' => $i,
+  ':nodeCount' => $nodeCount
+  ]),
+  'body' => 'this is some body text',
+  'status' => 1,
+  'type' => 'press_release',
+  'promote' => 1,
+  'langcode' => 'en',
+  );
+  // Create a node object from the array.
+  $node = $this->NodeStorage->create($node_fields);
+  // Save the node.
+  $this->NodeStorage->save($node);
+
+  }
+  }
+</code>
+</pre>
+      <small>In a service</small>
+    </section>
+
+    <section><h1>Editing Nodes Programmatically</h1></section>
+    <section><h2>Editing Nodes Programmatically</h2>
+      <p>Drupal 7</p>
+<pre><code data-trim contenteditable>
+  function _mc_edit_node() {
+  // Load the node you want to edit.
+  $node = node_load(1);
+
+  // Make changes to the node object.
+  $node->title = t('New Node Title');
+
+  // Save the node.
+  node_save($node);
+  }
+</code>
+</pre>
+    </section>
+
+    <section><h2>Editing Nodes Programmatically</h2>
+      <p>Drupal 8</p>
+<pre><code data-trim contenteditable>
+  $node = \Drupal\node\Entity\Node::load($nid);
+
+  $node->set($field_name, $field_value);
+  $node->save();
+</code>
+</pre>
+    </section>
+
+    <section><h1>Querying for Nodes</h1></section>
+    <section><h2>Querying for Nodes</h2>
+      <p>Drupal 7</p>
+      <p>EntityFieldQuery (the most Drupaly Way)</p>
+
+<pre><code data-trim contenteditable>
+  // Going to use an EntityFieldQuery to get the nodes I want.
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node', '=')
+  ->entityCondition('bundle', 'article', '=')
+  ->propertyCondition('status', 1, '=');
+
+  $query->fieldCondition('field_state', 'IL', '=');
+
+  $query->addMetaData('account', user_load(1));
+
+  $result = $query->execute();
+</code>
+</pre>
+    </section>
+
+
+    <section><h2>Querying for Nodes</h2>
+      <p>Drupal 8</p>
+      <p>\Drupal::entityQuery</p>
+<pre><code data-trim contenteditable>
+  $query = \Drupal::entityQuery('node')
+  ->condition('type', 'press_release')
+  ->condition('field_counter', 3, '>')
+  ->condition('status', 1);
+
+  $result = $query->execute();
+</code>
+</pre>
+    </section>
+
+
+    <section><h1>Cron Tasks</h1></section>
+    <section><h2>Cron Tasks</h2>
+      <p>Identical between Drupal 7 and 8.<br>Put hook_cron(); in the .module file.</p>
+<pre><code data-trim contenteditable>
+  /**
+  * Implements hook_cron().
+  */
+  function mc_cron() {
+  // Do your stuff here.
+
+
+  // Log this running in Recent Log Messages
+  \Drupal::logger('midcamp')->notice('Midcamp cron ran');
+
+  }
+
+</code>
+</pre>
+    </section>
+
+    <section><h1>Get Nodes from Views Result</h1></section>
+    <section>
+      <h2>Get Nodes from Views Result</h2>
+      <p>Drupal 7</p>
+  <pre><code data-trim contenteditable>
+    // Load the view
+    $view = views_get_view('latest_press');
+    // Execute the view's default display
+    $view->execute('default');
+
+    // There's now a $view->result array which has the info about the
+    // nodes in the view result.
+    $nids = array();
+    foreach ($view->result as $key => $data) {
+    $nids[] = $data->nid;
+    }
+
+  </code>
+  </pre>
+    </section>
+
+    <section><h2>Get Nodes from Views Result</h2>
+      <p>Drupal 8</p>
+<pre><code data-trim contenteditable>
+  // Load the view
+  $view = Views::getView('latest_press_releases');
+  // Execute the view
+  $view->execute('page_1');
+
+  // Make an item list of out the nids of the results
+  $items = [];
+  foreach ($view->result as $result) {
+  $items[] = $result->nid;
+  }
+
+  $content[] = [
+  '#theme' => 'item_list',
+  '#items' => $items,
+  '#title' => t('Nodes in this Views result'),
+  ];
+
+</code>
+</pre>
+    </section>
+
+    <section><h1>Create Menu Link</h1></section>
+
+    <section>
+      <h2>Create Menu Link</h2>
+      <p>Drupal 7</p>
+<pre><code data-trim contenteditable>
+  /**
+  * Implements hook_menu().
+  */
+  function mc_menu() {
+  $items = array();
+
+  $items['mc/view-nids'] = array(
+  'title' => 'Drupal 7 - Get View Nodes',
+  'page callback' => '_mc_view_nids',
+  'access arguments' => array('access content'),
+  // Machine name of the menu in which the link should appear.
+  'menu_name' => 'user-menu',
+  );
+  return $items;
+  }
+
+</code>
+</pre>
+    </section>
+
+    <section>
+      <h2>Create Menu Link</h2>
+      <p>Drupal 8</p>
+      <p>In mc.links.menu.yml file</p>
+<pre><code data-trim contenteditable>
+  mc.press_releases:
+  title: 'Latest Press'
+  route_name: view.latest_press_releases.page_1
+  menu_name: main
+</code>
+</pre>
+    </section>
+    <section><h1>Creating Blocks</h1></section>
+    <section><h2>Creating Blocks</h2>
+      <p>Drupal 7</p>
+<pre><code data-trim contenteditable>
+  hook_block_info();
+  hook_block_view($delta);
+</code>
+</pre>
+    </section>
+    <section><h2>Creating Blocks</h2>
+      <p>Drupal 8</p>
+      <p>Create a Block Plugin</p><pre><code data-trim contenteditable>
+        namespace Drupal\mc\Plugin\Block;
+
+        use Drupal\Core\Block\BlockBase;
+        use Drupal\Core\Link;
+        use Drupal\Core\Url;
+
+        /**
+        * Provides a 'LinksBlock' block.
+        *
+        * @Block(
+        * id = "links_block",
+        * admin_label = @Translation("Links block"),
+        * )
+        */
+        class LinksBlock extends BlockBase {
+
+
+        /**
+        * {@inheritdoc}
+        */
+        public function build() {
+        $build = [];
+
+        $items = [];
+        $items[] = Link::fromTextAndUrl('Table', Url::fromRoute('mc.table_controller_generateTable'))->toString();
+        $items[] = Link::fromTextAndUrl('Lists', Url::fromRoute('mc.list_controller_generateLists'))->toString();
+        $items[] = Link::fromTextAndUrl('Links', Url::fromRoute('mc.link_controller_generateLinks'))->toString();
+
+        $build[] = [
+        '#theme' => 'item_list',
+        '#items' => $items,
+        '#title' => t('MidCamp Links'),
+        '#list_type' => 'ul',
+        ];
+
+
+        return $build;
+        }
+
+        }
+      </code>
+</pre>
+    </section>
+
+
+    <section>
+      <h1>MidCamp Sprint</h1>
+      <h2>Sunday, March 20 at 10 am</h2>
+      <h3><a href="https://2016.midcamp.org/venue-in-depth">UIC COMRB 909 S. Wolcott St</a></h3>
+      <p>(across the street from the venue)</p>
+      <p><em>Contributors of all skill sets and levels are welcome and encouraged to join us!</em></p>
+    </section>
+
+    <section>
+      <h1>Feedback</h1>
+      <h2><a href="https://legacy.joind.in/17254">legacy.joind.in/17254</a></h2>
+
+    </section>
+
+
+  </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'none', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      {
+        src: 'lib/js/classList.js', condition: function () {
+        return !document.body.classList;
+      }
+      },
+      {
+        src: 'plugin/markdown/marked.js', condition: function () {
+        return !!document.querySelector('[data-markdown]');
+      }
+      },
+      {
+        src: 'plugin/markdown/markdown.js', condition: function () {
+        return !!document.querySelector('[data-markdown]');
+      }
+      },
+      {
+        src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+        hljs.initHighlightingOnLoad();
+      }
+      },
+      {src: 'plugin/zoom-js/zoom.js', async: true},
+      {src: 'plugin/notes/notes.js', async: true}
+    ]
+  });
+
+</script>
+
+</body>
+</html>
