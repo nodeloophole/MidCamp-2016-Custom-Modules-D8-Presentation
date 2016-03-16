@@ -86,20 +86,18 @@
         <h5>https://duoconsulting.com</h5>
         <h4>@NodeLoophole</h4>
       </div>
-
-
     </section>
 
     <section>
       <h2>Code and Slides</h2>
-      <p>https://github.com/nodeloophole/midcamp2016</p>
+      <p>https://github.com/nodeloophole</p>
     </section>
 
     <section>
       <h2>Session Purpose</h2>
-      <p>To provide you with code examples comparing common tasks in Drupal 7 and their equivalent in Drupal
-        8.</p>
+      <p>To provide you with code examples comparing common tasks in Drupal 7 and their equivalent in Drupal 8.</p>
     </section>
+
     <section>
       <h2>Session Format</h2>
       <ul>
@@ -107,6 +105,7 @@
         <li>Show code examples in Drupal 8</li>
       </ul>
     </section>
+
     <section>
       <h2>Topics Covered</h2>
       <ul>
@@ -123,6 +122,7 @@
         <li>Create a block</li>
       </ul>
     </section>
+
     <section>
       <h2>Use Drupal Console!</h2>
       <p>Using Drupal Console will make your life easier for this and many other things.</p>
@@ -141,11 +141,10 @@
         <li>Output using:</li>
       </ul>
       <pre><code data-trim contenteditable>
-        $content = theme('table', array('header' => $header, 'rows' => $rows));
+$content = theme('table', array('header' => $header, 'rows' => $rows));
 
-        return $content;
+return $content;
       </code></pre>
-
     </section>
 
     <section><h2>HTML Tables</h2>
@@ -155,13 +154,13 @@
         <li>The render array is different</li>
       </ul>
       <pre><code data-trim contenteditable>
-        $content[] = array(
-        '#theme' => 'table',
-        '#header' => $header,
-        '#rows' => $rows,
-        );
+$content[] = array(
+  '#theme' => 'table',
+  '#header' => $header,
+  '#rows' => $rows,
+);
 
-        return $content;
+return $content;
       </code></pre>
 
     </section>
@@ -173,75 +172,77 @@
         <li><a href="https://goo.gl/OjbNyi" target="_blank">Table API </a></li>
       </ul>
     </section>
+
     <section><h2>Lists</h2></section>
+
     <section><h2>Lists</h2>
       <h3>Drupal 7</h3>
       <p>An array of items is passed to <code>theme('item_list',...)</code></p>
-            <pre><code data-trim contenteditable>
-              // Simple unordered list
-              $items = array(
-              'Item 1',
-              'Item 2',
-              'Item 3',
-              );
+      <pre><code data-trim contenteditable>
+// Simple unordered list
+$items = array(
+  'Item 1',
+  'Item 2',
+  'Item 3',
+);
 
-              $list = theme('item_list', array(
-              'title' => t('Unordered List'),
-              'items' => $items
-              ));
-            </code></pre>
+$list = theme('item_list', array(
+  'title' => t('Unordered List'),
+  'items' => $items
+));
+      </code></pre>
 
     </section>
     <section><h2>Lists</h2>
       <h3>Drupal 8</h3>
       <p>Feels similar - Create a renderable array </p>
 <pre><code data-trim contenteditable>
-  $fruits = array(
+$fruits = array(
   'Apple',
   'Banana',
   'Fig',
   'Mango',
   'Orange'
-  );
+);
 
-  $content[] = [
+$content[] = [
   '#theme' => 'item_list',
   '#items' => $fruits,
   '#title' => t('Some Fruits'),
   '#list_type' => 'ol',
   '#attributes' => array('class' => array('class-1', 'class-2'))
-  ];
+];
 </code>
 </pre>
     </section>
     <section><h2>Lists</h2>
       <p>Nested lists - put sub-items in 'children'
         <pre><code data-trim contenteditable>
-          $apples = array(
-          'Gala',
-          'Fuji',
-          'Golden Delicious',
-          );
+$apples = array(
+  'Gala',
+  'Fuji',
+  'Golden Delicious',
+);
 
-          $fruits = array(
-          array(
-          '#markup' => 'Apple',
-          'children' => $apples,
-          ),
+$fruits = array(
+  array(
+    '#markup' => 'Apple',
+    'children' => $apples,
+  ),
 
-          'Banana',
-          'Fig',
-          'Mango',
-          'Orange'
-          );
+  'Banana',
+  'Fig',
+  'Mango',
+  'Orange'
+);
 
-          $content[] = [
-          '#theme' => 'item_list',
-          '#items' => $fruits,
-          '#title' => t('Some Fruits'),
-          '#list_type' => 'ol',
-          '#attributes' => array('class' => array('class-1', 'class-2'))
-          ];
+$content[] = [
+  '#theme' => 'item_list',
+  '#items' => $fruits,
+  '#title' => t('Some Fruits'),
+  '#list_type' => 'ol',
+  '#attributes' => array('class' => array('class-1', 'class-2'))
+];
         </code>
         </pre>
     </section>
@@ -265,39 +266,40 @@
     </section>
     <section><p>HTML Code</p>
 <pre><code data-trim contenteditable>
-  $output .= '
-  <dd>' . t('The Database Logging module allows you
-    to view an event log on the <a href=":dblog">Recent log messages</a> page.
-    The log is a chronological list of recorded... properly.',
-    array(':dblog' => \Drupal::url('dblog.overview'))) . '
-  </dd>
-  ';
+$output .= '
+<dd>' . t('The Database Logging module allows you
+  to view an event log on the <a href=":dblog">Recent log messages</a> page.
+  The log is a chronological list of recorded... properly.',
+  array(':dblog' => \Drupal::url('dblog.overview'))) . '
+</dd>
+';
 </code>
 </pre>
     </section>
 
     <section>As a Render Array
 <pre><code data-trim contenteditable>
-  $url = (new Url('system.db_update', array('op' => 'run')))
+$url = (new Url('system.db_update', array('op' => 'run')))
   ->setOption('base_url', $base_url);
-  $build['link'] = array(
+
+$build['link'] = array(
   '#type' => 'link',
   '#title' => $this->t('Apply pending updates'),
   '#attributes' => array('class' => array('button', 'button--primary')),
   '#weight' => 5,
   '#url' => $url,
-  );
+);
 </code>
 </pre>
     </section>
 
     <section>
       <pre><code data-trim contenteditable>
-        use Drupal\Core\Link;
-        use Drupal\Core\Url;
-        ...
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+...
 
-        $link = new Link($text, $url);
+$link = new Link($text, $url);
       </code>
       </pre>
       <p>Creates Link object</p>
@@ -305,8 +307,7 @@
     <section>
       <h2>Using Link::_______</h2>
 <pre><code data-trim contenteditable>
-
-  Link::createFromRoute();
+Link::createFromRoute();
 
 </code>
 </pre>
@@ -315,7 +316,7 @@
     <section>
       <h2>Using Link::_______</h2>
 <pre><code data-trim contenteditable>
-  Link::fromTextAndUrl();
+Link::fromTextAndUrl();
 </code>
 </pre>
       <p>Creates Link object</p>
@@ -393,20 +394,20 @@
       <h2>Creating Nodes Programmatically</h2>
       <p>Drupal 7</p>
       <pre><code data-trim contenteditable>
-        $node = new stdClass();
+$node = new stdClass();
 
-        // Add info/field data to the node
-        $node->type = 'page';
-        $node->status = 1;
-        $node->uid = 1;
+// Add info/field data to the node
+$node->type = 'page';
+$node->status = 1;
+$node->uid = 1;
 
-        $node->title = t('Clever Node Title');
-        $node->body[LANGUAGE_NONE][0]['value'] = "Node body text.";
+$node->title = t('Clever Node Title');
+$node->body[LANGUAGE_NONE][0]['value'] = "Node body text.";
 
-        // Let Drupal sprinkle some magic on the class.
-        node_object_prepare($node);
+// Let Drupal sprinkle some magic on the class.
+node_object_prepare($node);
 
-        // Save the node.
+// Save the node.
         node_save($node);
       </code>
       </pre>
@@ -416,33 +417,36 @@
 
 <pre><code data-trim contenteditable>
 
-  public function __construct() {
+public function __construct() {
   // Hey Drupal, I want to play with nodes!
   $this->NodeStorage = \Drupal::entityTypeManager()->getStorage('node');
-  }
+}
 
-  public function generate($nodeCount = 1) {
+public function generate($nodeCount = 1) {
 
   for ($i = 1; $i <= $nodeCount; $i++) {
+
   // Create an array for the node
   $node_fields = array(
-  'title' => t('Press Release :i of :nodeCount', [
-  ':i' => $i,
-  ':nodeCount' => $nodeCount
-  ]),
-  'body' => 'this is some body text',
-  'status' => 1,
+    'title' => t('Press Release :i of :nodeCount', [
+      ':i' => $i,
+      ':nodeCount' => $nodeCount
+    ]),
+    'body' => 'this is some body text',
+    'status' => 1,
   'type' => 'press_release',
   'promote' => 1,
   'langcode' => 'en',
   );
+
   // Create a node object from the array.
   $node = $this->NodeStorage->create($node_fields);
+
   // Save the node.
   $this->NodeStorage->save($node);
 
   }
-  }
+}
 </code>
 </pre>
       <small>In a service</small>
@@ -452,7 +456,7 @@
     <section><h2>Editing Nodes Programmatically</h2>
       <p>Drupal 7</p>
 <pre><code data-trim contenteditable>
-  function _mc_edit_node() {
+function _mc_edit_node() {
   // Load the node you want to edit.
   $node = node_load(1);
 
@@ -461,7 +465,7 @@
 
   // Save the node.
   node_save($node);
-  }
+}
 </code>
 </pre>
     </section>
@@ -469,10 +473,10 @@
     <section><h2>Editing Nodes Programmatically</h2>
       <p>Drupal 8</p>
 <pre><code data-trim contenteditable>
-  $node = \Drupal\node\Entity\Node::load($nid);
+$node = \Drupal\node\Entity\Node::load($nid);
 
-  $node->set($field_name, $field_value);
-  $node->save();
+$node->set($field_name, $field_value);
+$node->save();
 </code>
 </pre>
     </section>
@@ -483,17 +487,17 @@
       <p>EntityFieldQuery (the most Drupaly Way)</p>
 
 <pre><code data-trim contenteditable>
-  // Going to use an EntityFieldQuery to get the nodes I want.
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node', '=')
+// Going to use an EntityFieldQuery to get the nodes I want.
+$query = new EntityFieldQuery();
+$query->entityCondition('entity_type', 'node', '=')
   ->entityCondition('bundle', 'article', '=')
   ->propertyCondition('status', 1, '=');
 
-  $query->fieldCondition('field_state', 'IL', '=');
+$query->fieldCondition('field_state', 'IL', '=');
 
-  $query->addMetaData('account', user_load(1));
+$query->addMetaData('account', user_load(1));
 
-  $result = $query->execute();
+$result = $query->execute();
 </code>
 </pre>
     </section>
@@ -503,12 +507,12 @@
       <p>Drupal 8</p>
       <p>\Drupal::entityQuery</p>
 <pre><code data-trim contenteditable>
-  $query = \Drupal::entityQuery('node')
+$query = \Drupal::entityQuery('node')
   ->condition('type', 'press_release')
   ->condition('field_counter', 3, '>')
   ->condition('status', 1);
 
-  $result = $query->execute();
+$result = $query->execute();
 </code>
 </pre>
     </section>
@@ -518,17 +522,17 @@
     <section><h2>Cron Tasks</h2>
       <p>Identical between Drupal 7 and 8.<br>Put hook_cron(); in the .module file.</p>
 <pre><code data-trim contenteditable>
-  /**
-  * Implements hook_cron().
-  */
-  function mc_cron() {
+/**
+* Implements hook_cron().
+*/
+function mc_cron() {
   // Do your stuff here.
 
 
   // Log this running in Recent Log Messages
   \Drupal::logger('midcamp')->notice('Midcamp cron ran');
 
-  }
+}
 
 </code>
 </pre>
@@ -539,17 +543,18 @@
       <h2>Get Nodes from Views Result</h2>
       <p>Drupal 7</p>
   <pre><code data-trim contenteditable>
-    // Load the view
-    $view = views_get_view('latest_press');
-    // Execute the view's default display
-    $view->execute('default');
+// Load the view
+$view = views_get_view('latest_press');
 
-    // There's now a $view->result array which has the info about the
-    // nodes in the view result.
-    $nids = array();
-    foreach ($view->result as $key => $data) {
-    $nids[] = $data->nid;
-    }
+// Execute the view's default display
+$view->execute('default');
+
+// There's now a $view->result array which has the info about the
+// nodes in the view result.
+$nids = array();
+foreach ($view->result as $key => $data) {
+  $nids[] = $data->nid;
+}
 
   </code>
   </pre>
@@ -558,22 +563,23 @@
     <section><h2>Get Nodes from Views Result</h2>
       <p>Drupal 8</p>
 <pre><code data-trim contenteditable>
-  // Load the view
-  $view = Views::getView('latest_press_releases');
-  // Execute the view
-  $view->execute('page_1');
+// Load the view
+$view = Views::getView('latest_press_releases');
 
-  // Make an item list of out the nids of the results
-  $items = [];
-  foreach ($view->result as $result) {
+// Execute the view
+$view->execute('page_1');
+
+// Make an item list of out the nids of the results
+$items = [];
+foreach ($view->result as $result) {
   $items[] = $result->nid;
-  }
+}
 
-  $content[] = [
+$content[] = [
   '#theme' => 'item_list',
   '#items' => $items,
   '#title' => t('Nodes in this Views result'),
-  ];
+];
 
 </code>
 </pre>
@@ -585,21 +591,22 @@
       <h2>Create Menu Link</h2>
       <p>Drupal 7</p>
 <pre><code data-trim contenteditable>
-  /**
-  * Implements hook_menu().
-  */
-  function mc_menu() {
+/**
+* Implements hook_menu().
+*/
+function mc_menu() {
   $items = array();
 
   $items['mc/view-nids'] = array(
-  'title' => 'Drupal 7 - Get View Nodes',
-  'page callback' => '_mc_view_nids',
-  'access arguments' => array('access content'),
-  // Machine name of the menu in which the link should appear.
-  'menu_name' => 'user-menu',
+   'title' => 'Drupal 7 - Get View Nodes',
+   'page callback' => '_mc_view_nids',
+    'access arguments' => array('access content'),
+    // Machine name of the menu in which the link should appear.
+    'menu_name' => 'user-menu',
   );
+
   return $items;
-  }
+}
 
 </code>
 </pre>
@@ -617,62 +624,66 @@
 </code>
 </pre>
     </section>
+
     <section><h1>Creating Blocks</h1></section>
+
     <section><h2>Creating Blocks</h2>
       <p>Drupal 7</p>
 <pre><code data-trim contenteditable>
-  hook_block_info();
-  hook_block_view($delta);
+hook_block_info();
+hook_block_view($delta);
 </code>
 </pre>
     </section>
+
     <section><h2>Creating Blocks</h2>
       <p>Drupal 8</p>
       <p>Create a Block Plugin</p><pre><code data-trim contenteditable>
-        namespace Drupal\mc\Plugin\Block;
+namespace Drupal\mc\Plugin\Block;
 
-        use Drupal\Core\Block\BlockBase;
-        use Drupal\Core\Link;
-        use Drupal\Core\Url;
+use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
-        /**
-        * Provides a 'LinksBlock' block.
-        *
-        * @Block(
-        * id = "links_block",
-        * admin_label = @Translation("Links block"),
-        * )
-        */
-        class LinksBlock extends BlockBase {
+/**
+* Provides a 'LinksBlock' block.
+*
+* @Block(
+* id = "links_block",
+* admin_label = @Translation("Links block"),
+* )
+*/
+class LinksBlock extends BlockBase {
+
+  /**
+  * {@inheritdoc}
+  */
+  public function build() {
+    $build = [];
+
+    $items = [];
+    $items[] = Link::fromTextAndUrl('Table', Url::fromRoute('mc.table_controller_generateTable'))->toString();
+    $items[] = Link::fromTextAndUrl('Lists', Url::fromRoute('mc.list_controller_generateLists'))->toString();
+    $items[] = Link::fromTextAndUrl('Links', Url::fromRoute('mc.link_controller_generateLinks'))->toString();
+
+    $build[] = [
+      '#theme' => 'item_list',
+      '#items' => $items,
+      '#title' => t('MidCamp Links'),
+      '#list_type' => 'ul',
+    ];
 
 
-        /**
-        * {@inheritdoc}
-        */
-        public function build() {
-        $build = [];
+    return $build;
+  }
 
-        $items = [];
-        $items[] = Link::fromTextAndUrl('Table', Url::fromRoute('mc.table_controller_generateTable'))->toString();
-        $items[] = Link::fromTextAndUrl('Lists', Url::fromRoute('mc.list_controller_generateLists'))->toString();
-        $items[] = Link::fromTextAndUrl('Links', Url::fromRoute('mc.link_controller_generateLinks'))->toString();
-
-        $build[] = [
-        '#theme' => 'item_list',
-        '#items' => $items,
-        '#title' => t('MidCamp Links'),
-        '#list_type' => 'ul',
-        ];
-
-
-        return $build;
-        }
-
-        }
+}
       </code>
 </pre>
     </section>
 
+
+    <section><h1>Questions?</h1></section>
 
     <section>
       <h1>MidCamp Sprint</h1>
