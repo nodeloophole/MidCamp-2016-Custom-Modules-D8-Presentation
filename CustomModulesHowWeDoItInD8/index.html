@@ -155,11 +155,11 @@ return $content;
         <li>The render array is different</li>
       </ul>
       <pre><code data-trim contenteditable>
-$content[] = array(
+$content[] = [
   '#theme' => 'table',
   '#header' => $header,
   '#rows' => $rows,
-);
+];
 
 return $content;
       </code></pre>
@@ -198,20 +198,22 @@ $list = theme('item_list', array(
       <h3>Drupal 8</h3>
       <p>Feels similar - Create a renderable array </p>
 <pre><code data-trim contenteditable>
-$fruits = array(
+$fruits = [
   'Apple',
   'Banana',
   'Fig',
   'Mango',
   'Orange'
-);
+];
 
 $content[] = [
   '#theme' => 'item_list',
   '#items' => $fruits,
   '#title' => t('Some Fruits'),
   '#list_type' => 'ol',
-  '#attributes' => array('class' => array('class-1', 'class-2'))
+  '#attributes' => [
+    'class' => ['class-1', 'class-2']
+  ]
 ];
 </code>
 </pre>
@@ -219,30 +221,32 @@ $content[] = [
     <section><h2>Lists</h2>
       <p>Nested lists - put sub-items in 'children'
         <pre><code data-trim contenteditable>
-$apples = array(
+$apples = [
   'Gala',
   'Fuji',
   'Golden Delicious',
-);
+];
 
-$fruits = array(
-  array(
+$fruits = [
+  [
     '#markup' => 'Apple',
     'children' => $apples,
-  ),
+  ],
 
   'Banana',
   'Fig',
   'Mango',
   'Orange'
-);
+];
 
 $content[] = [
   '#theme' => 'item_list',
   '#items' => $fruits,
   '#title' => t('Some Fruits'),
   '#list_type' => 'ol',
-  '#attributes' => array('class' => array('class-1', 'class-2'))
+  '#attributes' =>[
+    'class' => ['class-1', 'class-2']
+  ]
 ];
         </code>
         </pre>
@@ -283,13 +287,15 @@ $output .= '
 $url = (new Url('system.db_update', array('op' => 'run')))
   ->setOption('base_url', $base_url);
 
-$build['link'] = array(
+$build['link'] = [
   '#type' => 'link',
   '#title' => $this->t('Apply pending updates'),
-  '#attributes' => array('class' => array('button', 'button--primary')),
+  '#attributes' => [
+    'class' => ['button', 'button--primary']
+  ],
   '#weight' => 5,
   '#url' => $url,
-);
+];
 </code>
 </pre>
     </section>
@@ -428,7 +434,7 @@ public function generate($nodeCount = 1) {
   for ($i = 1; $i <= $nodeCount; $i++) {
 
   // Create an array for the node
-  $node_fields = array(
+  $node_fields = [
     'title' => t('Press Release :i of :nodeCount', [
       ':i' => $i,
       ':nodeCount' => $nodeCount
@@ -438,7 +444,7 @@ public function generate($nodeCount = 1) {
   'type' => 'press_release',
   'promote' => 1,
   'langcode' => 'en',
-  );
+  ];
 
   // Create a node object from the array.
   $node = $this->NodeStorage->create($node_fields);
