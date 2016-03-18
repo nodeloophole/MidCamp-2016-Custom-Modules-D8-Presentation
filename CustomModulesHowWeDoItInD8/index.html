@@ -126,7 +126,8 @@
 
     <section>
       <h2>Use Drupal Console!</h2>
-      <p>Using Drupal Console will make your life easier for this and many other things.</p>
+      <p>Using Drupal Console will make your life easier for so many things..</p>
+      <ul>Generating modules, controllers, services, etc.</ul>
       <p><a href="https://drupalconsole.com/" target="_blank">Drupal Console</a></p>
     </section>
     <section><h2>HTML Tables</h2></section>
@@ -269,20 +270,18 @@ $content[] = [
       </ul>
 
     </section>
-    <section><p>HTML Code</p>
+    <section><p>1. Link as part of HTML Code</p>
 <pre><code data-trim contenteditable>
 $output .= '
-<dd>' . t('The Database Logging module allows you
-  to view an event log on the <a href=":dblog">Recent log messages</a> page.
-  The log is a chronological list of recorded... properly.',
-  array(':dblog' => \Drupal::url('dblog.overview'))) . '
+<dd>' . t('The Database Logging ... the <a href=":dblog">Recent log messages</a> ...',
+  [':dblog' => \Drupal::url('dblog.overview')]) . '
 </dd>
 ';
 </code>
 </pre>
     </section>
 
-    <section>As a Render Array
+    <section>2. As a Render Array
 <pre><code data-trim contenteditable>
 $url = (new Url('system.db_update', array('op' => 'run')))
   ->setOption('base_url', $base_url);
@@ -301,6 +300,7 @@ $build['link'] = [
     </section>
 
     <section>
+      <p>3. Instantiate a new Link</p>
       <pre><code data-trim contenteditable>
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -309,39 +309,37 @@ use Drupal\Core\Url;
 $link = new Link($text, $url);
       </code>
       </pre>
-      <p>Creates Link object</p>
+      <p>*Creates a Link object</p>
     </section>
     <section>
-      <h2>Using Link::_______</h2>
+      <p>4. Using Link::createFromRoute()</p>
 <pre><code data-trim contenteditable>
 Link::createFromRoute();
 
 </code>
 </pre>
-      <p>Creates Link object</p>
+      <small>createFromRoute($text, $route_name, $route_parameters, $options);</small>
+      <p>*Creates Link object</p>
     </section>
     <section>
-      <h2>Using Link::_______</h2>
+      <p>5. Using Link::fromTextAndUrl()</p>
 <pre><code data-trim contenteditable>
 Link::fromTextAndUrl();
 </code>
 </pre>
-      <p>Creates Link object</p>
+      fromTextAndUrl($text, Url $url)
+      <p>*Creates a Link object</p>
     </section>
     <section>
       <h2>Link Object</h2>
       <h3>Options</h3>
       <ul>
-        <li>$Link->toRenderable() to generate a renderable array</li>
+        <li>$Link->toRenderable() to generate a render array</li>
         <li>$Link->toString() to generate &lt;a href="/path"&gt;...&lt;/a&gt; </li>
       </ul>
     </section>
 
     <section><h1>Overriding Page Titles and Routes</h1></section>
-    <section>
-      <h2>Overriding Page Titles and Routes</h2>
-      <p>Route information created by another module can be overridden by a RouteSubscriber.</p>
-    </section>
     <section>
       <h2>Override Titles / Tabs</h2>
       <p>Drupal 7</p>
@@ -349,12 +347,18 @@ Link::fromTextAndUrl();
       <img src="images/d7-menu-alter-01.png">
 
     </section>
+    <section>
+      <h2>Overriding Page Titles and Routes</h2>
+      <p>Route information created by another module can be overridden by a RouteSubscriber.</p>
+    </section>
+
 
 
     <section>
       <h2>What is a Route?</h2>
       <p>A <em>route</em> is a path which is defined for Drupal to return some sort of content.</p>
       <p>/user/login<br/>/node <br/>/node/123 </p>
+      <small><a href="https://www.drupal.org/developing/api/8/routing" target="_blank">https://www.drupal.org/developing/api/8/routing </a></small>
     </section>
     <section>
       <h2>What is a Route Subscriber?</h2>
@@ -370,6 +374,7 @@ Link::fromTextAndUrl();
         <li>Make the desired changes</li>
         <li>Add info to {module}.services.yml</li>
       </ol>
+      <p>Hint: USE DRUPAL CONSOLE</p>
     </section>
 
     <section><h3>Route Subscriber File</h3>
@@ -456,7 +461,7 @@ public function generate($nodeCount = 1) {
 }
 </code>
 </pre>
-      <small>In a service</small>
+
     </section>
 
     <section><h1>Editing Nodes Programmatically</h1></section>
